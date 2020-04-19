@@ -11,7 +11,7 @@ public class ReplaceActionTest {
     public void whenReplaceItem() {
         String newMessage = "New Item";
         String replacedMessage = "Replaced Item";
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item item = new Item(newMessage);
         tracker.add(item);
         String[] answers = {item.getId(), replacedMessage};
@@ -24,7 +24,7 @@ public class ReplaceActionTest {
     public void whenReplaceItemOnItemWithNullName() {
         String newMessage = "New Item";
         String replacedMessage = null;
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item item = new Item(newMessage);
         tracker.add(item);
         String[] answers = {item.getId(), replacedMessage};
@@ -37,7 +37,7 @@ public class ReplaceActionTest {
     public void whenReplacingItemHasNullName() {
         String newMessage = null;
         String replacedMessage = "Replaced Item";
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item item = new Item(newMessage);
         tracker.add(item);
         String[] answers = {item.getId(), replacedMessage};

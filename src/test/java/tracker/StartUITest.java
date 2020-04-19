@@ -10,9 +10,7 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 public class StartUITest {
@@ -34,7 +32,7 @@ public class StartUITest {
         Consumer<String> stringConsumer = System.out::println;
         StubInput input = new StubInput(new String[]{"0"});
         StubAction action = new StubAction();
-        new StartUI().init(input, new Tracker(), Arrays.asList(new UserAction[]{action}), stringConsumer);
+        new StartUI().init(input, new SqlTracker(), Arrays.asList(new UserAction[]{action}), stringConsumer);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("Menu.")
                 .add("0. Stub action")
@@ -44,7 +42,7 @@ public class StartUITest {
 
     @Test
     public void whenFindAllTest() {
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item item = new Item("how how");
         tracker.add(item);
         ShowAllAction act = new ShowAllAction();
@@ -58,7 +56,7 @@ public class StartUITest {
 
     @Test
     public void whenFindByNameActionTest() {
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item item = new Item("find me");
         tracker.add(item);
         FindByNameAction operate = new FindByNameAction();

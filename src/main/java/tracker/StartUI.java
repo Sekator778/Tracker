@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public class StartUI {
 
-    public void init(Input input, Tracker tracker, List<UserAction> actions, Consumer<String> output) {
+    public void init(Input input, Store tracker, List<UserAction> actions, Consumer<String> output) {
         boolean run = true;
         while (run) {
             this.showMenu(actions, output);
@@ -27,7 +27,7 @@ public class StartUI {
         Input input = new ConsoleInput();
         Consumer<String> stringConsumer = System.out::println;
         Input validateInput = new ValidateInput(input, stringConsumer);
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         List<UserAction> actions = new ArrayList<>();
         actions.add(new CreateAction());
         actions.add(new ShowAllAction());

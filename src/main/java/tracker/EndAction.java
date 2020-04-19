@@ -9,7 +9,7 @@ public class EndAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker, Consumer<String> output) {
+    public boolean execute(Input input, Store tracker, Consumer<String> output) {
         output.accept("Program close");
         return false;
     }
