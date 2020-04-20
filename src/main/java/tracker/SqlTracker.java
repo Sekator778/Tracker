@@ -27,6 +27,7 @@ public class SqlTracker implements Store {
      * потом с пропертью а так все просто надо запомнить последовательность
      */
     public void init() {
+        System.out.println("up");
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
@@ -63,7 +64,7 @@ public class SqlTracker implements Store {
         try (PreparedStatement preparedStatement = connection.prepareStatement("insert into items (name) values (?)", Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, item.getName());
             int rows = preparedStatement.executeUpdate();
-            System.out.printf("%d rows added", rows);
+            System.out.printf("%d rows added \n", rows);
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             if (resultSet.next()) {
@@ -73,7 +74,6 @@ public class SqlTracker implements Store {
             } else {
                 throw new SQLException("Not key for Item");
             }
-
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -156,8 +156,8 @@ public class SqlTracker implements Store {
     @Override
     public List<Item> findByName(String key) {
         List<Item> rsl = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement("select items.id, name from items where id = ?")) {
-            statement.setInt(1, Integer.parseInt(key));
+        try (PreparedStatement statement = connection.prepareStatement("select items.id, name from items where name = ?")) {
+            statement.setString(1, key);
             rsl = findSet(statement);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -193,7 +193,7 @@ public class SqlTracker implements Store {
         try (ResultSet set = statement.executeQuery()) {
             while (set.next()) {
                 int id = set.getInt(1);
-                String name = set.getNString(1);
+                String name = set.getString(2);
                 Item item = new Item(name);
                 item.setId(String.valueOf(id));
                 result.add(item);
