@@ -28,7 +28,7 @@ public class StartUI {
         Input input = new ConsoleInput();
         Consumer<String> stringConsumer = System.out::println;
         Input validateInput = new ValidateInput(input, stringConsumer);
-        try(Store tracker = new SqlTracker()) {
+        try (Store tracker = new SqlTracker()) {
             tracker.init();
             List<UserAction> actions = new ArrayList<>();
             actions.add(new CreateAction());

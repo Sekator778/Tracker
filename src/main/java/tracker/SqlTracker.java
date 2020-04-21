@@ -27,7 +27,6 @@ public class SqlTracker implements Store {
      * потом с пропертью а так все просто надо запомнить последовательность
      */
     public void init() {
-        System.out.println("up");
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
@@ -64,7 +63,7 @@ public class SqlTracker implements Store {
         try (PreparedStatement preparedStatement = connection.prepareStatement("insert into items (name) values (?)", Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, item.getName());
             int rows = preparedStatement.executeUpdate();
-            System.out.printf("%d rows added \n", rows);
+//            System.out.printf("%d rows added \n", rows);
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             if (resultSet.next()) {

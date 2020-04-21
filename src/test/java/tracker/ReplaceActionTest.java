@@ -13,6 +13,7 @@ public class ReplaceActionTest {
         String replacedMessage = "Replaced Item";
         Store tracker = new SqlTracker();
         Item item = new Item(newMessage);
+        tracker.init();
         tracker.add(item);
         String[] answers = {item.getId(), replacedMessage};
         new ReplaceItemAction().execute(new StubInput(answers), tracker, System.out::println);
@@ -26,6 +27,7 @@ public class ReplaceActionTest {
         String replacedMessage = null;
         Store tracker = new SqlTracker();
         Item item = new Item(newMessage);
+        tracker.init();
         tracker.add(item);
         String[] answers = {item.getId(), replacedMessage};
         new ReplaceItemAction().execute(new StubInput(answers), tracker, System.out::println);
@@ -39,6 +41,7 @@ public class ReplaceActionTest {
         String replacedMessage = "Replaced Item";
         Store tracker = new SqlTracker();
         Item item = new Item(newMessage);
+        tracker.init();
         tracker.add(item);
         String[] answers = {item.getId(), replacedMessage};
         new ReplaceItemAction().execute(new StubInput(answers), tracker, System.out::println);

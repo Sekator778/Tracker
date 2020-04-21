@@ -12,6 +12,7 @@ public class DeleteActionTest {
         String newMessage = "New Item";
         Store tracker = new SqlTracker();
         Item item = new Item(newMessage);
+        tracker.init();
         tracker.add(item);
         String[] answers = {item.getId()};
         new DeleteAction().execute(new StubInput(answers), tracker, System.out::println);

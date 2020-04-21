@@ -11,6 +11,7 @@ import static org.junit.Assert.assertThat;
 
 public class FindByIdActionTest {
 
+
     @Test
     public void whenFindById() {
         PrintStream std = System.out;
@@ -19,6 +20,7 @@ public class FindByIdActionTest {
         Store tracker = new SqlTracker();
         Item item1 = new Item("Item1");
         Item item2 = new Item("Item2");
+        tracker.init();
         tracker.add(item1);
         tracker.add(item2);
         Input input = new StubInput(new String[]{item1.getId()});
@@ -38,6 +40,7 @@ public class FindByIdActionTest {
         Store tracker = new SqlTracker();
         Item item1 = new Item(null);
         Item item2 = new Item("Item2");
+        tracker.init();
         tracker.add(item1);
         tracker.add(item2);
         Input input = new StubInput(new String[]{item2.getId()});
