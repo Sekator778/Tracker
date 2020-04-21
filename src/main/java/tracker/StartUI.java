@@ -43,19 +43,4 @@ public class StartUI {
             e.printStackTrace();
         }
     }
-
-//    public static void main(String[] args) {
-//        Input validate = new ValidateInput (
-//                new ConsoleInput()
-//        );
-//        try (Store tracker = new SqlTracker()) {
-//            tracker.init();
-//            UserAction[] actions = {
-//                    new CreateAction()
-//            };
-//            new StartUI().init(validate, tracker, actions);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
