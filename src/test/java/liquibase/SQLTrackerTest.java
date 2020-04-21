@@ -42,11 +42,11 @@ public class SQLTrackerTest {
     }
 
     /**
-     *
-     * @throws SQLException
+     * проверяем метод создания итема
+     * меряем размер масива %)
      */
     @Test
-    public void createItem() throws SQLException {
+    public void createItem() {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             tracker.add(new Item("name"));
             assertThat(tracker.findByName("name").size(), is(1));
@@ -55,6 +55,10 @@ public class SQLTrackerTest {
         }
     }
 
+    /**
+     * добавляем 3 итема и вытаскиваем и сравниваем два листа
+     * @throws SQLException - ошибка
+     */
     @Test
     public void whenFindAllShouldFoundAllItems() throws SQLException {
         SqlTracker sql = new SqlTracker(ConnectionRollback.create(this.init()));
