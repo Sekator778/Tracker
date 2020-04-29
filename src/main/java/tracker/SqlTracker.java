@@ -13,6 +13,8 @@ public class SqlTracker implements Store {
     private Connection connection;
     private static final Logger LOG = LoggerFactory.getLogger(SqlTracker.class.getName());
 
+    public SqlTracker() {
+    }
     //    /**
 //     * конструктор сразу с
 //     *
@@ -22,8 +24,6 @@ public class SqlTracker implements Store {
         this.connection = connection;
     }
 
-    public SqlTracker() {
-    }
 
     /**
      * тут надо разобраться четко с потоком из файла app.properties
