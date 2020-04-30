@@ -17,7 +17,7 @@ public class FindByIdActionTest {
         PrintStream std = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        Store tracker = new SqlTracker();
+        Store tracker = new TrackerSQL();
         Item item1 = new Item("Item1");
         Item item2 = new Item("Item2");
         tracker.init();
@@ -37,7 +37,7 @@ public class FindByIdActionTest {
         PrintStream std = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        Store tracker = new SqlTracker();
+        Store tracker = new TrackerSQL();
         Item item1 = new Item(null);
         Item item2 = new Item("Item2");
         tracker.init();

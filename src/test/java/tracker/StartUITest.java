@@ -38,7 +38,7 @@ public class StartUITest {
         Consumer<String> stringConsumer = System.out::println;
         StubInput input = new StubInput(new String[]{"0"});
         StubAction action = new StubAction();
-        new StartUI().init(input, new SqlTracker(), Arrays.asList(new UserAction[]{action}), stringConsumer);
+        new StartUI().init(input, new TrackerSQL(), Arrays.asList(new UserAction[]{action}), stringConsumer);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("Menu.")
                 .add("0. Stub action")
@@ -48,7 +48,7 @@ public class StartUITest {
 
     @Ignore
     public void whenFindAllTest() {
-        Store tracker = new SqlTracker();
+        Store tracker = new TrackerSQL();
         Item item = new Item("how how");
         tracker.init();
         tracker.add(item);
@@ -63,7 +63,7 @@ public class StartUITest {
 
     @Ignore
     public void whenFindByNameActionTest() {
-        Store tracker = new SqlTracker();
+        Store tracker = new TrackerSQL();
         Item item = new Item("find me");
         tracker.init();
         tracker.add(item);

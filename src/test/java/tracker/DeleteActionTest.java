@@ -10,7 +10,7 @@ public class DeleteActionTest {
     @Test
     public void whenDeleteItem() {
         String newMessage = "New Item";
-        Store tracker = new SqlTracker();
+        Store tracker = new TrackerSQL();
         Item item = new Item(newMessage);
         tracker.init();
         tracker.add(item);

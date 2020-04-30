@@ -9,18 +9,18 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SqlTracker implements Store {
+public class TrackerSQL implements Store {
     private Connection connection;
-    private static final Logger LOG = LoggerFactory.getLogger(SqlTracker.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class.getName());
 
-    public SqlTracker() {
+    public TrackerSQL() {
     }
     //    /**
 //     * конструктор сразу с
 //     *
 //     * @param connection - соединение к БД
 //     */
-    public SqlTracker(Connection connection) {
+    public TrackerSQL(Connection connection) {
         this.connection = connection;
     }
 
@@ -30,7 +30,7 @@ public class SqlTracker implements Store {
      * потом с пропертью а так все просто надо запомнить последовательность
      */
     public void init() {
-        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));

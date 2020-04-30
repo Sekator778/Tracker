@@ -4,7 +4,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import tracker.ConnectionRollback;
 import tracker.Item;
-import tracker.SqlTracker;
+import tracker.TrackerSQL;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -26,7 +26,7 @@ import static org.junit.Assert.*;
 public class SQLTrackerTest {
 
     public Connection init() {
-        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
@@ -47,7 +47,7 @@ public class SQLTrackerTest {
      */
     @Test
     public void createItem() {
-        try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
+        try (TrackerSQL tracker = new TrackerSQL(ConnectionRollback.create(this.init()))) {
             tracker.add(new Item("name"));
             assertThat(tracker.findByName("name").size(), is(1));
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class SQLTrackerTest {
      */
     @Test
     public void whenFindAllShouldFoundAllItems() throws SQLException {
-        SqlTracker sql = new SqlTracker(ConnectionRollback.create(this.init()));
+        TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()));
         Item item1 = new Item("itemOne");
         Item item2 = new Item("itemTwo");
         Item item3 = new Item("itemThree");
@@ -74,7 +74,7 @@ public class SQLTrackerTest {
 
     @Test
     public void whenCreateItemAndGetByIdShouldBeSame() throws SQLException {
-        SqlTracker sql = new SqlTracker(ConnectionRollback.create(this.init()));
+        TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()));
         Item item = new Item("test item");
         Item expected = sql.add(item);
         Item actual = sql.findById(expected.getId());
@@ -83,7 +83,7 @@ public class SQLTrackerTest {
 
     @Test
     public void whenDeleteItemByIdShouldBeDeleted() throws SQLException {
-        SqlTracker sql = new SqlTracker(ConnectionRollback.create(this.init()));
+        TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()));
         Item item = new Item("delete item");
         sql.add(item);
         assertTrue(sql.delete(item.getId()));
@@ -93,7 +93,7 @@ public class SQLTrackerTest {
 
     @Test
     public void whenReplaceItemAndGetByIdShouldBeReplaced() throws SQLException {
-        SqlTracker sql = new SqlTracker(ConnectionRollback.create(this.init()));
+        TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()));
         Item item = new Item("replace item");
         sql.add(item);
         item.setName("replaced");
@@ -103,7 +103,7 @@ public class SQLTrackerTest {
 
     @Test
     public void whenFindItemByNameShouldFoundAllItems() throws SQLException {
-        SqlTracker sql = new SqlTracker(ConnectionRollback.create(this.init()));
+        TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()));
         Item item1 = new Item("same item");
         Item item2 = new Item("same item");
         Item item3 = new Item("same item");
