@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 /**
  *
  */
-@Ignore
+
 public class TrackerSQLTest {
     public Connection init() {
         try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
@@ -39,7 +39,7 @@ public class TrackerSQLTest {
     @Test
     public void createItem() throws Exception {
         try (TrackerSQL tracker = new TrackerSQL(ConnectionRollback.create(this.init()))) {
-            tracker.add(new Item("desc"));
+            tracker.add(new Item("name"));
             assertThat(tracker.findByName("name").size(), is(1));
         }
     }

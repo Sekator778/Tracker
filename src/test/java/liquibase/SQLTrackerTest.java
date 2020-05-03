@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
  * перед тестами нужна чистая таблица  почему так ??
  *
  */
-@Ignore
 public class SQLTrackerTest {
 
     public Connection init() {
