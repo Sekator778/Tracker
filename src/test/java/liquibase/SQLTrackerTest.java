@@ -68,6 +68,7 @@ public class SQLTrackerTest {
         sql.add(item2);
         sql.add(item3);
         List<Item> expected = List.of(item1, item2, item3);
+
         assertThat(sql.findAll(), is(expected));
     }
 

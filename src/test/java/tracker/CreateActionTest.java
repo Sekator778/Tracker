@@ -10,7 +10,6 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@Ignore
 public class CreateActionTest {
     /**
      * додаем итем с именем
@@ -22,8 +21,7 @@ public class CreateActionTest {
         String newMessage = "This name item just add";
         MemTracker tracker = new MemTracker();
         String[] answers = {newMessage};
-//        tracker.init();
-//        new CreateAction().execute(new StubInput(answers), tracker, System.out::println);
+        new CreateAction().execute(new StubInput(answers), tracker, System.out::println);
         List<Item> items = tracker.findAll();
         Item added = items.get(items.size() - 1);
         assertThat(added.getName(), is(newMessage));
