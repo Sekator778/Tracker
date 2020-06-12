@@ -23,7 +23,7 @@ public class FindByIdActionTest {
         tracker.init();
         tracker.add(item1);
         tracker.add(item2);
-        Input input = new StubInput(new String[]{item1.getId()});
+        Input input = new StubInput(new String[]{String.valueOf(item1.getId())});
         new FindItemByIdAction().execute(input, tracker, System.out::println);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("name: " + item1.getName() + " id:" + item1.getId())
@@ -43,7 +43,7 @@ public class FindByIdActionTest {
         tracker.init();
         tracker.add(item1);
         tracker.add(item2);
-        Input input = new StubInput(new String[]{item2.getId()});
+        Input input = new StubInput(new String[]{String.valueOf(item2.getId())});
         new FindItemByIdAction().execute(input, tracker, System.out::println);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("name: " + item2.getName() + " id:" + item2.getId())

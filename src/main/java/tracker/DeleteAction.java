@@ -10,7 +10,7 @@ public class DeleteAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Store tracker, Consumer<String> output) {
-        String id = input.askStr("=== Enter id Item for delete ===" + System.lineSeparator());
+        int id = Integer.parseInt(input.askStr("=== Enter id Item for delete ===" + System.lineSeparator()));
         if (tracker.delete(id)) {
             output.accept("=== delete successful ===");
         } else {

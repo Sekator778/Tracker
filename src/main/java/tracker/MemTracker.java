@@ -33,9 +33,10 @@ public class MemTracker implements Store {
      *
      * @return Уникальный ключ.
      */
-    private String generateId() {
+    private Integer generateId() {
         Random rm = new Random();
-        return String.valueOf(rm.nextLong() + System.currentTimeMillis());
+        Integer i = Math.toIntExact((int) (long) rm.nextLong() + System.currentTimeMillis());
+        return i;
     }
 
     /**
@@ -44,7 +45,7 @@ public class MemTracker implements Store {
      *
      * @return цельный масив
      */
-    public  List<Item> findAll() {
+    public List<Item> findAll() {
         return items;
     }
 
@@ -66,8 +67,9 @@ public class MemTracker implements Store {
      * @param id уникальный ключ у кажого итема
      * @return получаем итем
      */
-    public Item findById(String id) {
-        int index = indexOf(id);
+    @Override
+    public Item findById(int id) {
+        int index = id;
         if (index != -1) {
             return items.get(index);
         }
@@ -78,7 +80,7 @@ public class MemTracker implements Store {
      * @param id уникальный ключ у кажого итема
      * @return возвращает индекс елемента в масиве итемов items
      */
-    private int indexOf(String id) {
+    private int indexOf(int id) {
         int rsl = -1;
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId().equals(id)) {
@@ -90,22 +92,21 @@ public class MemTracker implements Store {
     }
 
     /**
-     * @param id   старый айди
      * @param item новый итем с новым айди
      * @return пока не ясно что тестить
      */
-    public boolean replace(String id, Item item) {
-        int index = indexOf(id);
+    public boolean replace(int index, Item item) {
         if (index == -1) {
             return false;
         }
-        item.setId(id);
+        item.setId(index);
         items.set(index, item);
         return true;
     }
 
-    public boolean delete(String id) {
-        int index = indexOf(id);
+    @Override
+    public boolean delete(int id) {
+        int index = id;
         if (index == -1) {
             return false;
         }

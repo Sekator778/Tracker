@@ -1,5 +1,8 @@
 package tracker;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import org.slf4j.LoggerFactory;
 public class TrackerSQL implements Store {
     private Connection connection;
     private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class.getName());
+    private boolean createdDB = false;
 
     public TrackerSQL() {
     }
@@ -42,6 +46,30 @@ public class TrackerSQL implements Store {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+        if (!createdDB) {
+            createTable();
+            LOG.info("table items was created");
+        }
+
+    }
+
+    private void createTable() {
+        String sql = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("/home/sekator/projects/Tracker1/db/create.sql"));
+            int c;
+            while ((c = reader.read()) != -1) {
+                sql += (char) c;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        createdDB = true;
     }
 
     @Override
@@ -71,7 +99,7 @@ public class TrackerSQL implements Store {
 
             if (resultSet.next()) {
                 int id = resultSet.getInt(1);
-                item.setId(String.valueOf(id));
+                item.setId(id);
                 rsl = item;
             } else {
                 throw new SQLException("Not key for Item");
@@ -92,12 +120,12 @@ public class TrackerSQL implements Store {
      * @return строки в таблице изменились ?
      */
     @Override
-    public boolean replace(String id, Item item) {
+    public boolean replace(int id, Item item) {
         boolean rsl = false;
 
         try (PreparedStatement statement = connection.prepareStatement("update items set name = ? where id = ?")) {
             statement.setString(1, item.getName());
-            statement.setInt(2, Integer.parseInt(id));
+            statement.setInt(2, id);
             int rows = statement.executeUpdate();
             if (rows == 1) {
                 rsl = true;
@@ -117,10 +145,10 @@ public class TrackerSQL implements Store {
      * @return результат
      */
     @Override
-    public boolean delete(String id) {
+    public boolean delete(int id) {
         boolean rsl = false;
         try (PreparedStatement preparedStatement = connection.prepareStatement("delete from items where id = ?")) {
-            preparedStatement.setInt(1, Integer.parseInt(id));
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             rsl = true;
         } catch (SQLException e) {
@@ -169,10 +197,10 @@ public class TrackerSQL implements Store {
 
 
     @Override
-    public Item findById(String id) {
+    public Item findById(int id) {
         Item item = null;
         try (PreparedStatement statement = connection.prepareStatement("select items.id, name from items where id = ?")) {
-            statement.setInt(1, Integer.parseInt(id));
+            statement.setInt(1, id);
             List<Item> rsl = findSet(statement);
             if (!rsl.isEmpty()) {
                 item = rsl.get(0);
@@ -197,7 +225,7 @@ public class TrackerSQL implements Store {
                 int id = set.getInt(1);
                 String name = set.getString(2);
                 Item item = new Item(name);
-                item.setId(String.valueOf(id));
+                item.setId(id);
                 result.add(item);
             }
         } catch (SQLException e) {

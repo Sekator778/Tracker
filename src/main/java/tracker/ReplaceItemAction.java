@@ -10,7 +10,7 @@ public class ReplaceItemAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Store tracker, Consumer<String> output) {
-        String idOld = input.askStr("=== Enter id item for replace ===");
+        int idOld = Integer.parseInt(input.askStr("=== Enter id item for replace ==="));
         String nameNew = input.askStr(" === Enter name newItem === ");
         if (tracker.replace(idOld, new Item(nameNew))) {
             output.accept("=== Item replaced ===");
