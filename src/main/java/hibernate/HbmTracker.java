@@ -1,46 +1,31 @@
 package hibernate;
 
-/**
- *
- */
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.criterion.Restrictions;
 import tracker.Item;
-
+import tracker.Store;
+;
 import java.util.List;
 
-public class HibernateRun {
-    public static void main(String[] args) {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure().build();
-        try {
-            SessionFactory sf = new MetadataSources(registry)
-                    .buildMetadata().buildSessionFactory();
-            Item item = create(new Item("Learn Hibernate"), sf);
-            System.out.println("now created item: " + item);
-            item.setName("Learn Hibernate 5.");
-            update(item, sf);
-            System.out.println("now update item " + item);
-            Item rsl = findById(item.getId(), sf);
-            System.out.println("item find by id: " + rsl);
-            delete(rsl.getId(), sf);
-            List<Item> list = findAll(sf);
-            System.out.println("find all: ");
-            for (Item it : list) {
-                System.out.println(it);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
+public class HbmTracker implements Store, AutoCloseable {
+
+    private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+            .configure().build();
+    private final SessionFactory sf = new MetadataSources(registry)
+            .buildMetadata().buildSessionFactory();
+
+    @Override
+    public void init() {
+
     }
 
-    public static Item create(Item item, SessionFactory sf) {
+    @Override
+    public Item add(Item item) {
         Session session = sf.openSession();
         session.beginTransaction();
         session.save(item);
@@ -49,15 +34,18 @@ public class HibernateRun {
         return item;
     }
 
-    public static void update(Item item, SessionFactory sf) {
+    @Override
+    public boolean replace(int id, Item item) {
         Session session = sf.openSession();
         session.beginTransaction();
         session.update(item);
         session.getTransaction().commit();
         session.close();
+        return true;
     }
 
-    public static void delete(Integer id, SessionFactory sf) {
+    @Override
+    public boolean delete(int id) {
         Session session = sf.openSession();
         session.beginTransaction();
         Item item = new Item(null);
@@ -65,9 +53,11 @@ public class HibernateRun {
         session.delete(item);
         session.getTransaction().commit();
         session.close();
+        return true;
     }
 
-    public static List<Item> findAll(SessionFactory sf) {
+    @Override
+    public List<Item> findAll() {
         Session session = sf.openSession();
         session.beginTransaction();
         List result = session.createQuery("from tracker.Item").list();
@@ -76,12 +66,25 @@ public class HibernateRun {
         return result;
     }
 
-    public static Item findById(Integer id, SessionFactory sf) {
+    @Override
+    public List<Item> findByName(String key) {
+        Session session = sf.openSession();
+        Criteria criteria = session.createCriteria(Item.class);
+        return criteria.add(Restrictions.eq("name", key)).list();
+    }
+
+    @Override
+    public Item findById(int id) {
         Session session = sf.openSession();
         session.beginTransaction();
         Item result = session.get(Item.class, id);
         session.getTransaction().commit();
         session.close();
         return result;
+    }
+
+    @Override
+    public void close() throws Exception {
+        StandardServiceRegistryBuilder.destroy(registry);
     }
 }
