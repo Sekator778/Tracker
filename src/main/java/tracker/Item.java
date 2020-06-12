@@ -1,10 +1,21 @@
 package tracker;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * модель данных
+ */
+@Entity
+@Table(name = "items")
 public class Item {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String name;
+
+    public Item() {
+    }
 
     public Item(String name) {
         this.name = name;
