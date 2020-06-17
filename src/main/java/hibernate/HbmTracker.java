@@ -7,9 +7,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import tracker.Item;
 import tracker.Store;
-;
+
 import java.util.List;
 
 public class HbmTracker implements Store, AutoCloseable {
@@ -71,6 +72,13 @@ public class HbmTracker implements Store, AutoCloseable {
         Session session = sf.openSession();
         Criteria criteria = session.createCriteria(Item.class);
         return criteria.add(Restrictions.eq("name", key)).list();
+    }
+
+    public List<Item> findByName2(String key) {
+        Session session = sf.openSession();
+        Query query = session.createQuery("from tracker.Item where name = :param");
+        query.setParameter("param", key);
+        return (List<Item>) query.list();
     }
 
     @Override
