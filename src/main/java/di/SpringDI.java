@@ -10,12 +10,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class SpringDI {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(Store.class);
-        context.register(StartUI.class);
+        context.scan("di");
         context.refresh();
         StartUI startUI = context.getBean(StartUI.class);
         startUI.add("Bob");
         startUI.add("Alex");
         startUI.print();
+        context.close();
     }
 }
