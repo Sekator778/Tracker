@@ -35,8 +35,13 @@ public class MemTracker implements Store {
      */
     private Integer generateId() {
         Random rm = new Random();
-        Integer i = Math.toIntExact((int) (long) rm.nextLong() + System.currentTimeMillis());
-        return i;
+        Random rand = new Random(System.currentTimeMillis());
+// loop starts here
+        double randomNumber = Math.floor(10 * rand.nextDouble());
+// If you want an integer up to inputParam1 as it seems, you can do:
+        int randomInt = (int) randomNumber;
+//        Integer i = Math.toIntExact((int) rm.nextLong() + System.currentTimeMillis());
+        return randomInt;
     }
 
     /**
