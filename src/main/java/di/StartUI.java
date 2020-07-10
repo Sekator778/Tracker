@@ -1,5 +1,6 @@
 package di;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,11 +10,8 @@ import java.util.List;
  */
 @Component
 public class StartUI {
+    @Autowired
     private Store store;
-
-    public StartUI(Store store) {
-        this.store = store;
-    }
 
     public void add(String value) {
         this.store.add(value);
