@@ -16,6 +16,8 @@ public class SpringDI {
         startUI.add("Bob");
         startUI.add("Alex");
         startUI.print();
+        StartUI startUI2 = context.getBean(StartUI.class);
+        System.out.println(startUI == startUI2);
         context.close();
     }
 }
