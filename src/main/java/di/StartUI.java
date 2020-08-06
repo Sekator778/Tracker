@@ -12,6 +12,9 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class StartUI {
+    public StartUI() {
+    }
+
     @Autowired
     private Store store;
 

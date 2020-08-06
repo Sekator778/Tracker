@@ -12,7 +12,10 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class Store {
-    private List<String> data = new ArrayList<>();
+    public Store() {
+    }
+
+    private final List<String> data = new ArrayList<>();
 
     public void add(String value) {
         data.add(value);
