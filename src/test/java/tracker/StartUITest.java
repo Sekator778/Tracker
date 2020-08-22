@@ -2,7 +2,6 @@ package tracker;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -17,6 +16,7 @@ import static org.junit.Assert.assertThat;
 /**
  * для таких тестов нужно таблицу всегда чистую
  * как это делать пока не знаю
+ * 22.08.20 уже знаю %)
  */
 
 public class StartUITest {
@@ -75,6 +75,4 @@ public class StartUITest {
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
     }
-
-
 }

@@ -20,5 +20,4 @@ public class DeleteActionTest {
         Item expected = null;
         assertThat(deleted, is(expected));
     }
-
 }

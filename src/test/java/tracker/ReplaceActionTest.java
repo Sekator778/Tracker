@@ -48,5 +48,4 @@ public class ReplaceActionTest {
         Item replaced = tracker.findById(item.getId());
         assertThat(replaced.getName(), is(replacedMessage));
     }
-
 }

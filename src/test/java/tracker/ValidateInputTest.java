@@ -92,5 +92,4 @@ public class ValidateInputTest {
         int result = validateInput.askInt("Enter");
         assertThat(result, is(0));
     }
-
 }

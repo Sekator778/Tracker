@@ -1,10 +1,7 @@
 package tracker;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
