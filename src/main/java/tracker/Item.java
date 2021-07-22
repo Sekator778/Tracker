@@ -1,6 +1,8 @@
 package tracker;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -13,6 +15,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String name;
+    LocalDateTime created = LocalDateTime.now();
 
     public Item() {
     }
@@ -35,6 +38,10 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
     }
 
     @Override
